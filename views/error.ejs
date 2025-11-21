@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error <%= err.statusCode || 500 %></title>
+  <link rel="stylesheet" href="/css/style.css"> <!-- optional -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8d7da;
+      color: #721c24;
+      text-align: center;
+      padding: 60px;
+    }
+    h1 {
+      font-size: 3em;
+    }
+    p {
+      font-size: 1.3em;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #721c24;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+    a:hover {
+      background-color: #501216;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚠️ Oops! <%= err.statusCode || 500 %> Error</h1>
+  <p><%= err.message || "Something went wrong" %></p>
+  <a href="/listings">Go Back Home</a>
+</body>
+</html>

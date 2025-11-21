@@ -1,0 +1,182 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+/* Shift entire content */
+.listings-wrapper {
+  margin-left: -22px;
+  margin-top: -85px;
+}
+
+/* Filters */
+#filters {
+  margin-left: 10px;
+  margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filter {
+  font-size: 13px;
+  text-align: center;
+  opacity: 0.7;
+  width: 70px;
+}
+.filter:hover { opacity: 1; cursor: pointer; }
+.filter i { font-size: 16px; margin-bottom: 4px; }
+.filter p { margin-top: 4px; font-size: 12px; }
+
+/* NEW CUSTOM TOGGLE SWITCH */
+.tax-toggle {
+  margin-left: 10rem;
+  margin-top: -0.75rem;
+  border: 1.2px solid #bfbfbf;
+  border-radius: 22px;
+  padding: 2px 10px;
+  display: inline-flex;
+  align-items: center;
+  height: 3.25rem;
+  gap: 10px;
+  background: #fff;
+  font-size: 0.78rem;
+  opacity: 0.9;
+}
+
+/* ✔ Text on left */
+.tax-toggle label {
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* ✔ Custom Sliding Switch */
+.switch {
+  position: relative;
+  width: 38px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .3s;
+  border-radius: 25px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+/* When checked */
+.switch input:checked + .slider {
+  background-color: #ff385c;   /* Airbnb pink */
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+/* GST text beside price */
+.gst-tag {
+  color: #0e0e0e;
+  font-size: 0.85rem;
+  font-weight: 600;
+  float: right;
+  display: none;
+}
+</style>
+
+<body>
+
+<div class="listings-wrapper">
+
+  <!-- FILTERS -->
+  <div id="filters">
+    <div class="filter"><i class="fa-solid fa-fire"></i><p>Trending</p></div>
+    <div class="filter"><i class="fa-solid fa-bed"></i><p>Rooms</p></div>
+    <div class="filter"><i class="fa-solid fa-mountain-city"></i><p>Iconic Cities</p></div>
+    <div class="filter"><i class="fa-solid fa-mountain"></i><p>Mountains</p></div>
+    <div class="filter"><i class="fa-brands fa-fort-awesome"></i><p>Castles</p></div>
+    <div class="filter"><i class="fa-solid fa-campground"></i><p>Camping</p></div>
+    <div class="filter"><i class="fa-solid fa-cow"></i><p>Farms</p></div>
+    <div class="filter"><i class="fa-solid fa-person-swimming"></i><p>Amazing Pools</p></div>
+    <div class="filter"><i class="fa-solid fa-snowflake"></i><p>Arctic</p></div>
+    <div class="filter"><i class="fa-solid fa-igloo"></i><p>Domes</p></div>
+    <div class="filter"><i class="fa-solid fa-ship"></i><p>Boats</p></div>
+
+    <!-- NEW CUSTOM SLIDER SWITCH WITH TEXT BEFORE IT -->
+    <div class="tax-toggle">
+      <label for="taxSwitchCheck">Show prices with tax</label>
+
+      <label class="switch">
+        <input type="checkbox" id="taxSwitchCheck">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+  </div>
+  <!-- END FILTERS -->
+
+
+  <!-- LISTINGS GRID -->
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2">
+    <% for (let listing of allListings) { %>
+
+      <a href="/listings/<%= listing._id %>" class="listing-link">
+        <div class="card col listing-card">
+
+          <img src="<%= listing.image.url %>"
+               class="card-img-top"
+               alt="listing_image"
+               style="height:20rem;" />
+
+          <div class="card-body">
+            <p class="card-text">
+              <b><%= listing.title %></b><br>
+
+              ₹<%= listing.price.toLocaleString("en-IN") %> /night
+
+              <span class="gst-tag">+18% GST</span>
+            </p>
+          </div>
+
+        </div>
+      </a>
+
+    <% } %>
+  </div>
+  <!-- END LISTINGS -->
+
+</div>
+
+
+
+<!-- JS : Toggle GST visibility -->
+<script>
+document.getElementById("taxSwitchCheck").addEventListener("change", function () {
+  document.querySelectorAll(".gst-tag").forEach(tag => {
+    tag.style.display = this.checked ? "inline" : "none";
+  });
+});
+</script>
+
+</body>
